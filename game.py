@@ -16,8 +16,7 @@ def game_levels(words):
         elif 8 > len(word) > 6:
             levels['MODERATE'].append(word)
         else:
-            levels['HARD'].append(word) 
-        
+            levels['HARD'].append(word)    
     return levels
     
 def set_difficulty(levels):
