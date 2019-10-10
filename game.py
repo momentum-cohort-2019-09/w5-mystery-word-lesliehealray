@@ -2,13 +2,11 @@ from collections import defaultdict
 from random import choice
 
 
-
 def word_list():
     with open("words.txt") as file_handler:
         words = file_handler.read().split()
     return words
     
-
 def game_levels(words):
     levels = defaultdict(list)
     for word in words:
@@ -35,9 +33,6 @@ def find(word, letter):
     # returns a list of indexes for each occurance of the letter in the word.
     return [i for i, letter_in_word in enumerate(word) if letter_in_word == letter]
     
-
-
-
 def prepare_game():
     words = word_list()
     levels = game_levels(words)
@@ -51,7 +46,6 @@ def play_again():
         run_game()
     else:
         exit()
-
 
 def run_game():
     mystery_word = prepare_game()
@@ -87,13 +81,7 @@ def run_game():
             print(board)          
     else:
         print(f"You lose the word was {mystery_word}")
-        play_again()
-        
-        
-
-    
-
-    
+        play_again()          
  
 if __name__ == "__main__":
     
