@@ -63,10 +63,12 @@ def run_game():
         letter = input('Guess a letter: ').lower()
         if not letter.isalpha() and len(letter) != 1:
             print("Please submit a single letter.")
+        elif letter in guessed:
+             print("You've already guessed the letter, try again")
+    
         else:
             guesses +=1
             guessed.append(letter)
-            
             # find returns either an emptylist or a list of index(es) 
             matches = find(mystery_word, letter)
             # python empty lists evaluates to false. For index in matches will only run if there is an index and won't execute if an empty list.
