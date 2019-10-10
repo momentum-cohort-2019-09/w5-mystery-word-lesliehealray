@@ -45,11 +45,19 @@ def prepare_game():
     mystery_word = choice(levels[difficulty]) 
     return mystery_word
 
+def play_again():
+    play_again = input("Do you want to play again? Y or N?").lower()
+    if play_again == "y":
+        run_game()
+    else:
+        exit()
+
 
 def run_game():
     mystery_word = prepare_game()
     guesses = 0
     wrong_guesses = []
+    guessed = []
     board = "_" * len(mystery_word)
     while guesses <= 10:
         letter = input('Guess a letter: ').lower()
@@ -57,6 +65,8 @@ def run_game():
             print("Please submit a single letter.")
         else:
             guesses +=1
+            guessed.append(letter)
+            
             # find returns either an emptylist or a list of index(es) 
             matches = find(mystery_word, letter)
             # python empty lists evaluates to false. For index in matches will only run if there is an index and won't execute if an empty list.
@@ -67,14 +77,18 @@ def run_game():
                 board = "".join(board) 
             if board == mystery_word:
                 print("you won!")
-                exit()
+                play_again()
             if not matches:            
                 wrong_guesses.append(letter)
                 print(f"Wrong Guesses {wrong_guesses}")
-            
+            print(f"Guessed letters {guessed}")
             print(board)          
     else:
         print(f"You lose the word was {mystery_word}")
+        play_again()
+        
+        
+
     
 
     
