@@ -12,6 +12,7 @@ def word_list():
 def game_levels(words):
     levels = defaultdict(list)
     for word in words:
+        word = word.lower()
         if len(word) <= 6:
             levels['EASY'].append(word)
         elif 8 > len(word) > 6:
@@ -31,8 +32,9 @@ def set_difficulty(levels):
 
 def find(word, letter):
     # loops through every letter in the word and compares it to the submitted letter. 
-    # returns indexes for each occurance of the letter in the word.
-    return [i for i, x in enumerate(word) if x == letter]
+    # returns a list of indexes for each occurance of the letter in the word.
+    return [i for i, letter_in_word in enumerate(word) if letter_in_word == letter]
+    
 
 
 
@@ -50,22 +52,26 @@ def run_game():
     wrong_guesses = []
     board = "_" * len(mystery_word)
     while guesses <= 10:
-        letter = input('Guess a letter: ')
+        letter = input('Guess a letter: ').lower()
         if not letter.isalpha() and len(letter) != 1:
             print("Please submit a single letter.")
-        elif board == mystery_word:
-            print("you won!")
         else:
             guesses +=1
-            if letter in mystery_word:
-                index = mystery_word.index(letter) 
+            # find returns either an emptylist or a list of index(es) 
+            matches = find(mystery_word, letter)
+            # python empty lists evaluates to false. For index in matches will only run if there is an index and won't execute if an empty list.
+            for index in  matches:
+                # convert board to a list
                 board = list(board)
-                matches = find()
                 board[index] = letter 
                 board = "".join(board) 
-            else:
+            if board == mystery_word:
+                print("you won!")
+                exit()
+            if not matches:            
                 wrong_guesses.append(letter)
                 print(f"Wrong Guesses {wrong_guesses}")
+            
             print(board)          
     else:
         print(f"You lose the word was {mystery_word}")
